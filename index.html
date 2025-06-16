@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Panda Keys - Инструкция по подключению Outline VPN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        :root {
+            --panda-black: #0f172a;
+            --panda-white: #fefce8;
+            --panda-green: #16a34a;
+            --panda-light-green: #bbf7d0;
+            --panda-gray: #e7e5e4;
+            --panda-dark-gray: #1e293b;
+            --panda-accent: #4ade80;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--panda-white) 0%, var(--panda-gray) 100%);
+            color: var(--panda-dark-gray);
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body::before {
+            content: "🐼";
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            font-size: 4rem;
+            opacity: 0.05;
+            transform: rotate(-20deg);
+            pointer-events: none;
+        }
+
+        body::after {
+            content: "🎍";
+            position: absolute;
+            bottom: 15%;
+            right: 5%;
+            font-size: 3rem;
+            opacity: 0.05;
+            transform: rotate(20deg);
+            pointer-events: none;
+        }
+
+        .panda-header {
+            background: var(--panda-black);
+            color: var(--panda-white);
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .panda-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .panda-icon {
+            font-size: 2.5rem;
+            color: var(--panda-green);
+            transition: transform 0.3s ease;
+        }
+
+        .panda-icon:active {
+            transform: rotate(360deg);
+        }
+
+        .panda-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--panda-green);
+            letter-spacing: -0.02em;
+        }
+
+        .panda-subtitle {
+            font-size: 0.9rem;
+            color: var(--panda-white);
+            opacity: 0.85;
+            font-weight: 400;
+        }
+
+        .rules-btn {
+            background: linear-gradient(45deg, var(--panda-green), var(--panda-light-green));
+            color: var(--panda-white);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            touch-action: manipulation;
+            transition: transform 0.2s ease;
+        }
+
+        .rules-btn:active {
+            transform: scale(0.95);
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .toc {
+            background: var(--panda-white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--panda-green);
+            display: none;
+        }
+
+        .toc.show {
+            display: block;
+            animation: slideInLeft 0.3s ease-out;
+        }
+
+        .toc-toggle {
+            display: block;
+            background: var(--panda-green);
+            color: var(--panda-white);
+            padding: 0.8rem;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            touch-action: manipulation;
+        }
+
+        .toc-toggle:active {
+            background: var(--panda-dark-gray);
+        }
+
+        .toc-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--panda-dark-gray);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+        }
+
+        .toc-title::before {
+            content: "🐾";
+            font-size: 1.2rem;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-item {
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid var(--panda-gray);
+        }
+
+        .toc-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .toc-link {
+            color: var(--panda-dark-gray);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.5rem;
+            touch-action: manipulation;
+        }
+
+        .toc-link:active, .toc-link.active {
+            color: var(--panda-green);
+            background: rgba(22, 163, 74, 0.1);
+            border-radius: 6px;
+        }
+
+        .toc-link i {
+            color: var(--panda-green);
+            width: 1.2rem;
+            text-align: center;
+        }
+
+        .content {
+            background: var(--panda-white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--panda-gray);
+        }
+
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: var(--panda-dark-gray);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+        }
+
+        .section-title i {
+            color: var(--panda-green);
+            background: rgba(22, 163, 74, 0.1);
+            width: 2.2rem;
+            height: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.1rem;
+        }
+
+        .section-content {
+            padding-left: 1rem;
+            border-left: 3px solid var(--panda-light-green);
+        }
+
+        .step {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .step-number {
+            position: absolute;
+            left: -2rem;
+            top: 0;
+            width: 1.8rem;
+            height: 1.8rem;
+            background: var(--panda-green);
+            color: var(--panda-white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--panda-dark-gray);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        .step-title::before {
+            content: "🐼";
+            font-size: 1rem;
+        }
+
+        .step-content {
+            margin-left: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .note-box {
+            background: rgba(22, 163, 74, 0.05);
+            border-left: 4px solid var(--panda-green);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .warning-box {
+            background: rgba(234, 179, 8, 0.05);
+            border-left: 4px solid #eab308;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .platform-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .platform-card {
+            background: var(--panda-white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid var(--panda-gray);
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+
+        .platform-card:active {
+            transform: scale(0.98);
+        }
+
+        .platform-card::before {
+            content: "🐾";
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            font-size: 1.2rem;
+            opacity: 0.2;
+        }
+
+        .platform-icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--panda-green);
+        }
+
+        .platform-name {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--panda-dark-gray);
+            font-size: 1.1rem;
+        }
+
+        .platform-link {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--panda-green), var(--panda-light-green));
+            color: var(--panda-white);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-top: 0.75rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            touch-action: manipulation;
+            transition: transform 0.2s ease;
+        }
+
+        .platform-link:active {
+            transform: scale(0.95);
+        }
+
+        .footer {
+            background: var(--panda-black);
+            color: var(--panda-white);
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 2rem;
+            position: relative;
+        }
+
+        .footer::before {
+            content: "🎍 🐼 🎍";
+            position: absolute;
+            top: 0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2rem;
+            opacity: 0.3;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .footer-link {
+            color: var(--panda-light-green);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 0.5rem;
+            touch-action: manipulation;
+        }
+
+        .footer-link:active {
+            color: var(--panda-green);
+            text-decoration: underline;
+        }
+
+        .panda-divider {
+            height: 5px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="10" viewBox="0 0 100 10"><text x="0" y="8" font-size="8" fill="%2316a34a">🐼🎍</text></svg>') repeat-x;
+            margin: 2rem 0;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 1000;
+            overflow-y: auto;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--panda-white);
+            margin: 10% 5%;
+            padding: 1.5rem;
+            border-radius: 12px;
+            max-width: 90%;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            color: var(--panda-dark-gray);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--panda-dark-gray);
+            transition: color 0.2s ease;
+            padding: 0.5rem;
+            touch-action: manipulation;
+        }
+
+        .close-modal:active {
+            color: var(--panda-green);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--panda-green);
+        }
+
+        .modal-title {
+            font-size: 1.6rem;
+            color: var(--panda-dark-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 700;
+        }
+
+        .rules-list {
+            list-style: none;
+            padding: 0 1rem;
+        }
+
+        .rule-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px dashed var(--panda-gray);
+            position: relative;
+            padding-left: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .rule-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .rule-item::before {
+            content: "🐼";
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 1.2rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @media (min-width: 768px) {
+            .panda-header {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 1.5rem 2rem;
+            }
+
+            .panda-title {
+                font-size: 2.2rem;
+            }
+
+            .panda-icon {
+                font-size: 3.5rem;
+            }
+
+            .panda-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .rules-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .container {
+                max-width: 1200px;
+                padding: 2.5rem 1.5rem;
+            }
+
+            .content-wrapper {
+                display: grid;
+                grid-template-columns: 1fr 3fr;
+                gap: 2rem;
+            }
+
+            .toc {
+                display: block;
+                position: sticky;
+                top: 100px;
+                padding: 2rem;
+            }
+
+            .toc-toggle {
+                display: none;
+            }
+
+            .toc-title {
+                font-size: 1.7rem;
+            }
+
+            .toc-link {
+                font-size: 1rem;
+                padding: 0.5rem 0;
+            }
+
+            .content {
+                padding: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 1.9rem;
+            }
+
+            .step-title {
+                font-size: 1.4rem;
+            }
+
+            .step-content {
+                font-size: 1rem;
+            }
+
+            .platform-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .platform-icon {
+                font-size: 2.8rem;
+            }
+
+            .platform-link {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.95rem;
+            }
+
+            .footer-links {
+                flex-direction: row;
+                gap: 1.5rem;
+            }
+
+            .modal-content {
+                margin: 5% auto;
+                max-width: 850px;
+                padding: 2.5rem;
+            }
+
+            .modal-title {
+                font-size: 2rem;
+            }
+
+            .rule-item {
+                font-size: 1rem;
+            }
+        }
+
+        .highlight {
+            background: rgba(22, 163, 74, 0.1);
+            padding: 0.2rem 0.4rem;
+            border-radius: 5px;
+            font-weight: 600;
+            color: var(--panda-green);
+        }
+    </style>
+</head>
+<body>
+    <header class="panda-header">
+        <div class="panda-logo">
+            <div class="panda-icon">🐼</div>
+            <div>
+                <h1 class="panda-title">Panda Keys</h1>
+                <p class="panda-subtitle">Outline VPN | Как подключиться?</p>
+            </div>
+        </div>
+        <button class="rules-btn" id="rulesBtn">
+            <i class="fas fa-scroll"></i> Правила использования
+        </button>
+    </header>
+
+    <div class="container">
+        <button class="toc-toggle" id="tocToggle">Показать содержание</button>
+        <div class="content-wrapper">
+            <aside class="toc" id="toc">
+                <h2 class="toc-title"><i class="fas fa-book"></i> Содержание</h2>
+                <ul class="toc-list">
+                    <li class="toc-item">
+                        <a href="#section1" class="toc-link">
+                            <i class="fas fa-copy"></i>
+                            <span>1. Скопируйте ключ</span>
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#section2" class="toc-link">
+                            <i class="fas fa-download"></i>
+                            <span>2. Установите клиент Outline</span>
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#section3" class="toc-link">
+                            <i class="fas fa-plug"></i>
+                            <span>3. Добавление ключа в Outline</span>
+                        </a>
+                    </li>
+                    <li class="toc-item">
+                        <a href="#section4" class="toc-link">
+                            <i class="fas fa-tv"></i>
+                            <span>4. Outline для Android TV</span>
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+
+            <main class="content">
+                <section id="section1" class="section">
+                    <h2 class="section-title">
+                        <i class="fas fa-copy"></i>
+                        1. Скопируйте ключ
+                    </h2>
+                    <div class="section-content">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <h3 class="step-title">Получение ключа</h3>
+                            <div class="step-content">
+                                <p>В нашем боте Panda Keys вы можете приобрести ключи для Outline VPN (ss или ssconf) и оформить подписку на несколько ключей.</p>
+                                <div class="note-box">
+                                    <p><i class="fas fa-info-circle"></i> Подписки предоставляются в виде защищённых HTTPS-ссылок.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <h3 class="step-title">Типы серверов</h3>
+                            <div class="step-content">
+                                <p>Серверы с поддержкой <span class="highlight">Vless</span> обозначены специальным значком 🛂. Их использование рекомендуется для максимальной безопасности.</p>
+
+                                <div class="warning-box">
+                                    <p><i class="fas fa-exclamation-triangle"></i> <strong>Важно:</strong> Для программы Outline не используйте серверы с значком 🛂, даже если они содержат ss-ключ. Эти серверы предназначены для других протоколов.</p>
+                                </div>
+
+                                <p>Бот Panda Keys выдает ключи в формате <span class="highlight">ssconf</span>, который оптимально подходит для использования с клиентом Outline.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="panda-divider"></div>
+
+                <section id="section2" class="section">
+                    <h2 class="section-title">
+                        <i class="fas fa-download"></i>
+                        2. Установите клиент Outline
+                    </h2>
+                    <div class="section-content">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <h3 class="step-title">Официальный клиент</h3>
+                            <div class="step-content">
+                                <p>Для ключей формата <span class="highlight">ssconf</span> вам потребуется официальный клиент Outline.</p>
+                                <p>Выберите вашу операционную систему и скачайте приложение:</p>
+
+                                <div class="platform-grid">
+                                    <div class="platform-card">
+                                        <div class="platform-icon">
+                                            <i class="fab fa-apple"></i>
+                                        </div>
+                                        <h3 class="platform-name">iOS</h3>
+                                        <p>App Store</p>
+                                        <a href="https://apps.apple.com/app/outline-app/id1356177741" class="platform-link">Скачать</a>
+                                    </div>
+
+                                    <div class="platform-card">
+                                        <div class="platform-icon">
+                                            <i class="fab fa-android"></i>
+                                        </div>
+                                        <h3 class="platform-name">Android</h3>
+                                        <p>Google Play</p>
+                                        <a href="https://play.google.com/store/apps/details?id=org.outline.android.client" class="platform-link">Скачать</a>
+                                    </div>
+
+                                    <div class="platform-card">
+                                        <div class="platform-icon">
+                                            <i class="fab fa-windows"></i>
+                                        </div>
+                                        <h3 class="platform-name">Windows</h3>
+                                        <p>EXE установщик</p>
+                                        <a href="https://raw.githubusercontent.com/Jigsaw-Code/outline-releases/master/client/Outline-Client.exe" class="platform-link">Скачать</a>
+                                    </div>
+
+                                    <div class="platform-card">
+                                        <div class="platform-icon">
+                                            <i class="fab fa-apple"></i>
+                                        </div>
+                                        <h3 class="platform-name">macOS</h3>
+                                        <p>App Store</p>
+                                        <a href="https://itunes.apple.com/us/app/outline-app/id1356178125" class="platform-link">Скачать</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <h3 class="step-title">Для Android TV</h3>
+                            <div class="step-content">
+                                <p>Для установки Outline VPN на телевизор с Android TV используйте специальную версию приложения:</p>
+
+                                <div class="platform-grid">
+                                    <div class="platform-card">
+                                        <div class="platform-icon">
+                                            <i class="fas fa-tv"></i>
+                                        </div>
+                                        <h3 class="platform-name">Outline TV</h3>
+                                        <p>Для телевизоров</p>
+                                        <a href="https://github.com/OutlineClients/OutlineTV/releases" class="platform-link">Скачать</a>
+                                    </div>
+                                </div>
+
+                                <div class="note-box">
+                                    <p><i class="fas fa-info-circle"></i> Это сторонняя разработка, доступная на GitHub. Установка требует включения опции "Неизвестные источники" в настройках вашего телевизора.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="panda-divider"></div>
+
+                <section id="section3" class="section">
+                    <h2 class="section-title" id="section3">
+                        <i class="fas fa-plug"></i>
+                        3. Добавление ключа в Outline
+                    </h2>
+                    <div class="section-content">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <h3 class="step-title">Копирование ключа</h3>
+                            <div class="step-content">
+                                <p>В боте Panda Keys:</p>
+                                <ol>
+                                    <li>Перейдите в раздел "Ключи"</li>
+                                    <li>Выберите "Ваш ключ"</li>
+                                    <li>Нажмите "Показать ключ"</li>
+                                    <li>Скопируйте весь текст ключа</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <h3 class="step-title">Добавление в приложение</h3>
+                            <div class="step-content">
+                                <p>Откройте приложение Outline на вашем устройстве:</p>
+                                <ol>
+                                    <li>Нажмите кнопку "Добавить сервер"</li>
+                                    <li>Выберите "Импортировать по ссылке"</li>
+                                    <li>Вставьте скопированный ключ в поле</li>
+                                    <li>Нажмите "Добавить"</li>
+                                </ol>
+
+                                <div class="note-box">
+                                    <p><i class="fas fa-info-circle"></i> Приложение автоматически распознает формат ssconf и добавит сервер.</p>
+                                </div>
+
+                                <div class="warning-box">
+                                    <p><i class="fas fa-exclamation-triangle"></i> <strong>Важно:</strong> Убедитесь, что вы используете ключ именно в формате ssconf, а не Vless. Ключи Vless несовместимы с Outline.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <h3 class="step-title">Активация подключения</h3>
+                            <div class="step-content">
+                                <p>После добавления сервера:</p>
+                                <ol>
+                                    <li>Вернитесь на главный экран приложения</li>
+                                    <li>Найдите добавленный сервер в списке</li>
+                                    <li>Переключите ползунок в активное положение</li>
+                                    <li>Дождитесь установки подключения</li>
+                                </ol>
+                                <p>Теперь ваш интернет-трафик защищён с помощью Outline VPN!</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="panda-divider"></div>
+
+                <section id="section4" class="section">
+                    <h2 class="section-title">
+                        <i class="fas fa-tv"></i>
+                        4. Outline для Android TV
+                    </h2>
+                    <div class="section-content">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <h3 class="step-title">Установка приложения</h3>
+                            <div class="step-content">
+                                <p>Для использования Outline на телевизоре:</p>
+                                <ol>
+                                    <li>Скачайте APK-файл Outline TV с <a href="https://github.com/OutlineClients/OutlineTV/releases" style="color: var(--panda-green);">GitHub</a></li>
+                                    <li>Переместите файл на USB-носитель</li>
+                                    <li>Подключите USB к телевизору</li>
+                                    <li>Установите приложение через файловый менеджер</li>
+                                </ol>
+
+                                <div class="note-box">
+                                    <p><i class="fas fa-info-circle"></i> В настройках телевизора необходимо разрешить установку приложений из неизвестных источников.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <h3 class="step-title">Добавление ключа</h3>
+                            <div class="step-content">
+                                <p>Процесс добавления ключа аналогичен мобильной версии:</p>
+                                <ol>
+                                    <li>Откройте Outline TV</li>
+                                    <li>Выберите "Добавить сервер"</li>
+                                    <li>Вставьте скопированный ключ</li>
+                                    <li>Сохраните и активируйте подключение</li>
+                                </ol>
+                                <p>Теперь ваш телевизор подключен к защищённой сети через Outline VPN!</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="https://t.me/pandakeysbot" class="footer-link">Техническая поддержка</a>
+            <a href="#" class="footer-link" id="termsBtn">Условия использования</a>
+            <a href="#" class="footer-link">Политика конфиденциальности</a>
+        </div>
+    </footer>
+
+    <!-- Modal для Правил -->
+    <div class="modal" id="rulesModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeRulesModal">×</span>
+            <div class="modal-header">
+                <h2 class="modal-title">🐼 Правила использования Panda Keys</h2>
+            </div>
+            <ul class="rules-list">
+                <li class="rule-item">Получая ключ от @pandakeysbot, вы соглашаетесь со следующими правилами:</li>
+                <li class="rule-item">Используя VPN-сервер, вы обязуетесь не совершать действий, противоречащих законодательству стран, где расположен сервер.</li>
+                <li class="rule-item">Если из-за ваших действий (например, скачивания торрентов) сервер будет заблокирован, средства, оплаченные за ключ, не возвращаются.</li>
+                <li class="rule-item">Если на сервере действует пробный период, и вы приобрели ключ, средства не могут быть возвращены из-за неудовлетворительного качества соединения.</li>
+                
+                <li class="rule-item">Если на сервере нет пробного периода, вы имеете право запросить возврат средств в течение 48 часов.</li>
+                <li class="rule-item">Если сервер недоступен более 30 минут, вы имеете право на полный возврат средств за предоставленный ключ (если с момента его выдачи не прошло 30 дней).</li>
+                <li class="rule-item">Перепродажа/распространение ключей, полученных через бота @pandakeysbot, запрещена. В случае обнаружения продажи ключа аккаунт пользователя будет заблокирован.</li>
+                <li class="rule-item">Средства не возвращаются за нарушение пункта 6.</li>
+                <li class="rule-item">Срок действия бесплатных ключей составляет 7 дней (независимо от объёма использованного трафика).</li>
+                <li class="rule-item">Пользователь обязуется не использовать сервер для спама, фишинга, взлома и другой незаконной деятельности.</p>
+                <li class="rule-item">Пользователь обязуется не использовать сервер для обхода блокировок на веб-сайтах, запрещённых в стране, где находится пользователь.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal для Условий -->
+    <div class="modal" id="termsModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeTermsModal">×</span>
+            <div class="modal-header">
+                <h2 class="modal-title">🐼 Условия использования Panda Keys</h2>
+            </div>
+            <ul class="rules-list">
+                <li class="rule-item">Получая ключ от @pandakeysbot, вы соглашаетесь со следующими правилами:</li>
+                <li class="rule-item">Используя VPN-сервер, вы обязуетесь не совершать действий, противоречащих законодательству стран, где расположен сервер.</li>
+                <li class="rule-item">Если из-за ваших действий (например, скачивания торрентов) сервер будет заблокирован, средства, оплаченные за ключ, не возвращаются.</li>
+                <li class="rule-item">Если на сервере действует пробный период, и вы приобрели ключ, средства не могут быть возвращены из-за неудовлетворительного качества соединения.</li>
+                <li class="rule-item">Если на сервере нет пробного периода, вы имеете право запросить возврат средств в течение 48 часов.</li>
+                <li class="rule-item">Если сервер недоступен более 30 минут, вы имеете право на полный возврат средств за предоставленный ключ (если с момента его выдачи не прошло 30 дней).</li>
+                <li class="rule-item">Перепродажа/распространение ключей, полученных через бота @pandakeysbot, запрещена. В случае обнаружения продажи ключа аккаунт пользователя будет заблокирован.</li>
+                <li class="rule-item">Средства не возвращаются за нарушение пункта 6.</li>
+                <li class="rule-item">Срок действия бесплатных ключей составляет 7 дней (независимо от объёма использованного трафика).</li>
+                <li class="rule-item">Пользователь обязуется не использовать сервер для спама, фишинга, взлома и другой незаконной деятельности.</li>
+                <li class="rule-item">Пользователь обязуется не использовать сервер для обхода блокировок на веб-сайтах, запрещённых в стране, где находится пользователь.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Table of Contents
+        const tocToggle = document.getElementById('tocToggle');
+        const toc = document.getElementById('toc');
+
+        tocToggle.addEventListener('click', () => {
+            toc.classList.toggle('show');
+            tocToggle.textContent = toc.classList.contains('show') ? 'Скрыть содержание' : 'Показать содержание';
+        });
+
+        // Rules Modal
+        const rulesModal = document.getElementById('rulesModal');
+        const rulesBtn = document.getElementById('rulesBtn');
+        const closeRulesModal = document.getElementById('closeRulesModal');
+
+        rulesBtn.addEventListener('click', () => {
+            rulesModal.classList.add('show');
+        });
+
+        closeRulesModal.addEventListener('click', () => {
+            rulesModal.classList.remove('show');
+        });
+
+        // Terms Modal
+        const termsModal = document.getElementById('termsModal');
+        const termsBtn = document.getElementById('termsBtn');
+        const closeTermsModal = document.getElementById('closeTermsModal');
+
+        termsBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            termsModal.classList.add('show');
+        });
+
+        closeTermsModal.addEventListener('click', () => {
+            termsModal.classList.remove('show');
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === rulesModal) {
+                rulesModal.classList.remove('show');
+            }
+            if (e.target === termsModal) {
+                termsModal.classList.remove('show');
+            }
+        });
+
+        // Smooth scrolling for table of contents
+        document.querySelectorAll('.toc-link').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = anchor.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+
+                // Hide TOC on mobile after click
+                if (window.innerWidth <= 768) {
+                    toc.classList.remove('show');
+                    tocToggle.textContent = 'Показать содержание';
+                }
+            });
+        });
+
+        // Highlight active section
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            const tocLinks = document.querySelectorAll('.toc-link');
+            let currentSection = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.pageYOffset >= (sectionTop - 100)) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
